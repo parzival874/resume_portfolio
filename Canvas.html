@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billiard Table on Canvas</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #4b4545;
+            text-align: center;
+        }
+        canvas {
+            border: 9px solid #d48989;
+            margin-bottom: 1rem; /* Space between canvas and button */
+        }
+        .back-button {
+            background-color: #d48989;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1rem;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .back-button:hover {
+            background-color: #b07272;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="billiardCanvas" width="600" height="800"></canvas>
+    <a href="index.html" class="back-button">Back</a>
+
+    <script>
+        const canvas = document.getElementById('billiardCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Draw the table border
+        ctx.fillStyle = '#8B4513'; // Wood color
+        ctx.fillRect(50, 50, 500, 700);
+
+        // Draw the table surface
+        ctx.fillStyle = '#006400'; // Green felt color
+        ctx.fillRect(75, 75, 450, 650);
+
+        // Draw the pockets (circles)
+        const pocketRadius = 20;
+        const pocketPositions = [
+            { x: 75, y: 75 },     // Top-left (left side)
+            { x: 75, y: 400 },    // Middle-left (center left)
+            { x: 75, y: 725 },    // Bottom-left
+            { x: 525, y: 75 },    // Top-right (right side)
+            { x: 525, y: 400 },   // Middle-right (center right)
+            { x: 525, y: 725 }    // Bottom-right
+        ];
+        
+        ctx.fillStyle = '#000';
+        pocketPositions.forEach(pos => {
+            ctx.beginPath();
+            ctx.arc(pos.x, pos.y, pocketRadius, 0, Math.PI * 2);
+            ctx.fill();
+        });
+
+        // Draw the balls
+        const ballRadius = 15;
+
+        // Function to draw a ball
+        function drawBall(x, y, color, number, isStriped = false) {
+            // Draw the ball's base color
+            ctx.beginPath();
+            ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+            ctx.fillStyle = color;
+            ctx.fill();
+            ctx.strokeStyle = '#000';
+            ctx.stroke();
+
+            // Draw the stripe for striped balls
+            if (isStriped) {
+                ctx.beginPath();
+                ctx.arc(x, y, ballRadius, 0.3 * Math.PI, 0.7 * Math.PI);
+                ctx.arc(x, y, ballRadius, 1.3 * Math.PI, 1.7 * Math.PI);
+                ctx.fillStyle = '#000000';
+                ctx.fill();
+            }
+
+            // Draw the ball's number
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = 'bold 12px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(number, x, y);
+        }
+
+        // Ball color and number setup
+        const solidBalls = [
+            { color: '#FFD700', number: 1 },
+            { color: '#0000FF', number: 2 },
+            { color: '#FF0000', number: 3 },
+            { color: '#008000', number: 4 },
+            { color: '#FF00FF', number: 5 },
+            { color: '#FF6347', number: 6 },
+            { color: '#8A2BE2', number: 7 },
+        ];
+
+        const stripedBalls = [
+            { color: '#FFD700', number: 9 },
+            { color: '#0000FF', number: 10 },
+            { color: '#FF0000', number: 11 },
+            { color: '#008000', number: 12 },
+            { color: '#FF00FF', number: 13 },
+            { color: '#FF6347', number: 14 },
+            { color: '#8A2BE2', number: 15 },
+            { color: '#8A2BE2', number: 15 },
+        ];
+
+        const blackBall = { color: '#000000', number: 8 };
+
+        // Arrange balls in a triangle
+        const triangleBaseX = 300;
+        const triangleBaseY = 200;
+        let ballIndex = 0;
+
+        // Define the ball positions
+        const ballPositions = [
+            [0],              // 1st row
+            [1, 2],           // 2nd row
+            [3, 4, 5],        // 3rd row
+            [6, 7, 8, 9],     // 4th row
+            [10, 11, 12, 13, 14] // 5th row
+        ];
+
+        // Draw the balls in the triangle
+        for (let row = 0; row < ballPositions.length; row++) {
+            for (let col = 0; col < ballPositions[row].length; col++) {
+                const x = triangleBaseX + col * (ballRadius * 2) - row * ballRadius;
+                const y = triangleBaseY + row * (ballRadius * 2);
+
+                if (ballIndex === 4) {
+                    // Draw the black ball in the center
+                    drawBall(x, y, blackBall.color, blackBall.number);
+                } else if (ballIndex < 7) {
+                    // Draw solid balls
+                    drawBall(x, y, solidBalls[ballIndex].color, solidBalls[ballIndex].number);
+                } else {
+                    // Draw striped balls
+                    drawBall(x, y, stripedBalls[ballIndex - 7].color, stripedBalls[ballIndex - 7].number, true);
+                }
+                ballIndex++;
+            }
+        }
+
+        // Draw the cue ball
+        drawBall(300, 600, '#FFFFFF', '');
+
+    </script>
+</body>
+</html>

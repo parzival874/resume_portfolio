@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="StyleSheet.css">
+  <title>Registration CEIT</title>
+</head>
+<body>
+ 
+  <div class="container">
+    <div class="head">
+      <img src="LOGO (2).png" alt="Logo" class="logo">
+      <h2>Registration Form</h2>
+    </div>
+    <form action="process_registration.php" method="post">
+      <div class="content">
+        <div class="input-box">
+          <label for="name">Full Name</label>
+          <input type="text" placeholder="Enter full name" name="name" required>
+        </div>
+        <div class="input-box">
+          <label for="schoolId">School I.D</label>
+          <input type="text" placeholder="Enter id number" name="schoolId" required>
+        </div>
+        <div class="input-box">
+          <label for="bday">Birthday</label>
+          <input type="date" placeholder="Enter your Birthday" name="bday" required>
+        </div>
+        <div class="input-box">
+          <label for="email">Email</label>
+          <input type="email" placeholder="Enter your school email" name="email" required>
+        </div>
+        <div class="input-box">
+          <label for="phoneNumber">Contact Number</label>
+          <input type="tel" placeholder="Enter contact number" name="phoneNumber" required>
+        </div>
+        <div class="input-box">
+          <label for="year">Year</label>
+          <input type="year" placeholder="Enter Year" name="year" required>
+        </div>
+        <div class="input-box">
+          <label for="sports">Sports</label>
+          <input type="text" placeholder="Enter Sports" name="sports" required>
+        </div>
+        <div class="input-box">
+          <label for="talent">Talent</label>
+          <input type="text" placeholder="Enter talent" name="talent" required>
+        </div>
+        <div class="input-box">
+          <label for="course">Course</label>
+          <select name="course" id="course">
+            <option value="bsit">BsIT</option>
+            <option value="bsece">BsECE</option>
+            <option value="bscpe">BsCPE</option>
+            <option value="bsie">BsIE</option>
+          </select>
+        </div>
+        <div class="input-box">
+          <label for="Orgs">Organization</label>
+          <select name="Orgs" id="Orgs">
+            <option value="jpcs">JPCS</option>
+            <option value="cgates">CGATES</option>
+            <option value="jpiie">JPIIE</option>
+            <option value="jiecep">JIECEP</option>
+          </select>
+        </div>
+        <span class="gender-title">Gender</span>
+        <div class="gender-category">
+          <input type="radio" name="gender" id="male" value="Male">
+          <label for="male">Male</label>
+          <input type="radio" name="gender" id="female" value="Female">
+          <label for="female">Female</label>
+          <input type="radio" name="gender" id="other" value="Other">
+          <label for="other">Other</label>
+        </div>
+      </div>
+      <div class="alert">
+        <p>By clicking Sign Up, you agree to our <a href="#">Terms</a>, <a href="">Policy</a> and <a href="">Cookies Policy</a>.</p>
+      </div>
+      <div class="button-container">
+        <button type="submit">Register</button>
+        <a href="index.html" class="back-button">Back</a> <!-- Updated Back button -->
+      </div>
+    </form>
+  </div>
+
+</body>
+</html>
